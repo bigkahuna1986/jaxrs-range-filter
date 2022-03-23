@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package net.jolivier.s3api.http.filter;
+package to.lova.jaxrs.filter;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package net.jolivier.s3api.http.filter;
+package to.lova.jaxrs.filter;
 
 import java.io.IOException;
 import java.io.OutputStream;

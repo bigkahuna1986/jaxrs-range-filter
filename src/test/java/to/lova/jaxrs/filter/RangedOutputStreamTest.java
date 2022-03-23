@@ -15,38 +15,38 @@ import jakarta.ws.rs.core.MultivaluedHashMap;
  */
 public class RangedOutputStreamTest {
 
-    /**
-     * Tests a single range.
-     */
-    @Test
-    public void singleRangeTest() {
-        OutputStream baos = new ByteArrayOutputStream();
-        MultivaluedHashMap<String, Object> headers = new MultivaluedHashMap<>();
-        try (RangedOutputStream ros = new RangedOutputStream(baos, "bytes=6-10", "text/plain", headers)) {
-            Assertions.assertEquals("bytes", ros.getAcceptRanges());
-            Assertions.assertFalse(ros.isMultipart());
-            PrintStream printStream = new PrintStream(ros);
-            printStream.append("abcdefghijklmnopqrstuvwxyz");
-            printStream.flush();
-            Assertions.assertEquals("ghijk", baos.toString());
-        } catch (IOException e) {
-            Assertions.fail(e);
-        }
-    }
+	/**
+	 * Tests a single range.
+	 */
+	@Test
+	public void singleRangeTest() {
+		OutputStream baos = new ByteArrayOutputStream();
+		MultivaluedHashMap<String, Object> headers = new MultivaluedHashMap<>();
+		try (RangedOutputStream ros = new RangedOutputStream(baos, -1L, "bytes=6-10", "text/plain", headers)) {
+			Assertions.assertEquals("bytes", ros.getAcceptRanges());
+			Assertions.assertFalse(ros.isMultipart());
+			PrintStream printStream = new PrintStream(ros);
+			printStream.append("abcdefghijklmnopqrstuvwxyz");
+			printStream.flush();
+			Assertions.assertEquals("ghijk", baos.toString());
+		} catch (IOException e) {
+			Assertions.fail(e);
+		}
+	}
 
-    /**
-     * Tests multiple ranges.
-     */
-    @Test
-    public void multiRangeTest() {
-        OutputStream baos = new ByteArrayOutputStream();
-        MultivaluedHashMap<String, Object> headers = new MultivaluedHashMap<>();
-        try (RangedOutputStream ros = new RangedOutputStream(baos, "bytes=6-10,18-", "text/plain", headers)) {
-            Assertions.assertEquals("bytes", ros.getAcceptRanges());
-            Assertions.assertTrue(ros.isMultipart());
-            String boundary = ros.getBoundary();
-            String response =
-            // @formatter:off
+	/**
+	 * Tests multiple ranges.
+	 */
+	@Test
+	public void multiRangeTest() {
+		OutputStream baos = new ByteArrayOutputStream();
+		MultivaluedHashMap<String, Object> headers = new MultivaluedHashMap<>();
+		try (RangedOutputStream ros = new RangedOutputStream(baos, -1L, "bytes=6-10,18-", "text/plain", headers)) {
+			Assertions.assertEquals("bytes", ros.getAcceptRanges());
+			Assertions.assertTrue(ros.isMultipart());
+			String boundary = ros.getBoundary();
+			String response =
+			// @formatter:off
                     "--" + boundary + "\r\n" +
                     "Content-Type: text/plain\r\n" +
                     "Content-Range: bytes 6-10/26\r\n" +
@@ -59,13 +59,13 @@ public class RangedOutputStreamTest {
                     "stuvwxyz\r\n" +
                     "--" + boundary + "--";
             // @formatter:on
-            PrintStream printStream = new PrintStream(ros);
-            printStream.append("abcdefghijklmnopqrstuvwxyz");
-            printStream.flush();
-            Assertions.assertEquals(response, baos.toString());
-        } catch (IOException e) {
-            Assertions.fail(e);
-        }
-    }
+			PrintStream printStream = new PrintStream(ros);
+			printStream.append("abcdefghijklmnopqrstuvwxyz");
+			printStream.flush();
+			Assertions.assertEquals(response, baos.toString());
+		} catch (IOException e) {
+			Assertions.fail(e);
+		}
+	}
 
 }
