@@ -57,7 +57,7 @@
         <maven.source.version>3.0.1</maven.source.version>
         <maven.gpg.version>1.6</maven.gpg.version>
         <jacoco.version>0.7.9</jacoco.version>
-        <jaxrs.version>2.1</jaxrs.version>
+        <jaxrs.version>3.0.0</jaxrs.version>
         <junit.version>5.0.1</junit.version>
         <junit.platform.version>1.0.0</junit.platform.version>
         <mockito.version>2.13.0</mockito.version>
@@ -66,8 +66,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>javax.ws.rs-api</artifactId>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
             <version>${jaxrs.version}</version>
         </dependency>
         <dependency>

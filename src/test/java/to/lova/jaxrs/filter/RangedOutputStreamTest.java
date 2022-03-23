@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-import javax.ws.rs.core.MultivaluedHashMap;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import jakarta.ws.rs.core.MultivaluedHashMap;
 
 /**
  * Tests for {@link RangedOutputStream}.
